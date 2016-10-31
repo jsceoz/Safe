@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class BufferArea(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
@@ -9,7 +9,10 @@ class BufferArea(models.Model):
 
 
 class DangerousArea(models.Model):
-
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    radius = models.IntegerField()
+    info = models.TextField()
 
 
 class Location(models.Model):

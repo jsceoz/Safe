@@ -28,7 +28,7 @@ class BufferAreaSerializer(serializers.HyperlinkedModelSerializer):
 class DangerousAreaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = DangerousArea
-        fields = ()
+        fields = ('latitude', 'longitude', 'radius', 'info')
 
 
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
@@ -54,9 +54,36 @@ class BufferAreaViewSet(viewsets.ModelViewSet):
     serializer_class = BufferAreaSerializer
 
 
+class DangerousAreaViewSet(viewsets.ModelViewSet):
+    queryset = DangerousArea.objects.all()
+    serializer_class = DangerousAreaSerializer
 
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+
+
+router = routers.DefaultRouter()
+router.register(r'bufferarea', BufferAreaViewSet)
+router.register(r'dangerousarea', DangerousAreaViewSet)
+router.register(r'location', LocationViewSet)
+router.register(r'user', UserViewSet)
+router.register(r'message', MessageViewSet)
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
